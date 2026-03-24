@@ -34,18 +34,11 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointE
 
 // --- CONFIGURATION ---
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDho5QVgrilcjtGv5l60LD34l48R8CDgfM",
-  authDomain: "ghar-kharcha-2.firebaseapp.com",
-  projectId: "ghar-kharcha-2",
-  storageBucket: "ghar-kharcha-2.firebasestorage.app",
-  messagingSenderId: "156973348495",
-  appId: "1:156973348495:web:ea97242143741fd2d162fa"
-};
+const firebaseConfig = JSON.parse(__firebase_config);
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = "ghar-kharcha-2";
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -221,25 +214,28 @@ export default function App() {
     }
   }, []);
 
-useEffect(() => {
-  const initAuth = async () => {
-    try {
-      const __initial_auth_token = process.env.REACT_APP_INITIAL_AUTH_TOKEN; // <-- here
-
-      if (__initial_auth_token) {
-        await signInWithCustomToken(auth, __initial_auth_token);
-      } else {
-        await signInAnonymously(auth);
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    };
 
-  initAuth();
-}, []);
+    initAuth();
 
-   
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (!user || !nickname) return;
