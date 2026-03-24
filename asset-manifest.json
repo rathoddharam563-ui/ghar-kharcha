@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ghar-kharcha/static/css/main.f44d2f36.css",
+    "main.js": "/ghar-kharcha/static/js/main.ca0109f3.js",
+    "static/js/453.44a224cb.chunk.js": "/ghar-kharcha/static/js/453.44a224cb.chunk.js",
+    "index.html": "/ghar-kharcha/index.html",
+    "main.f44d2f36.css.map": "/ghar-kharcha/static/css/main.f44d2f36.css.map",
+    "main.ca0109f3.js.map": "/ghar-kharcha/static/js/main.ca0109f3.js.map",
+    "453.44a224cb.chunk.js.map": "/ghar-kharcha/static/js/453.44a224cb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f44d2f36.css",
+    "static/js/main.ca0109f3.js"
+  ]
+}
